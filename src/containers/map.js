@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Cell from './cell.js';
+import Modal from './modalWindow.js'
 import {
   createField,
   populateArray,
@@ -18,8 +19,20 @@ class Map extends Component {
         bombCount),
         '☀'
       ),
+      difficulty: 0,
       cellsClicked: 1
     };
+  }
+
+  changeDifficulty(difficulty) {
+    this.setState({ difficulty: difficulty,
+      mapSize: difficulty * 10,
+      bombCount: difficulty * 10,
+      theMap: adjustCounts(populateArray(createField(difficulty * 10, difficulty * 10), '☀',
+        difficulty ** 2 * 10),
+        '☀'
+      ),
+    });
   }
 
   handleCellsClicked() {
@@ -34,6 +47,7 @@ class Map extends Component {
   render() {
     return (
       <div>
+        <Modal click={this.changeDifficulty.bind(this)} />
         <table>
           <tbody>
             {this.state.theMap.map((item, row) => {

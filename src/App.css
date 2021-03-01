@@ -45,6 +45,8 @@ table {
   border: 5px solid black;
   border-radius: 10px;
   padding: 5px;
+  width: 50vw;
+  height: 45vw;
 }
 
 td {
@@ -55,9 +57,15 @@ td {
 }
 
 .cell {
-  width: 40px;
-  height: 40px;
-  font-size: 30px;
+  font-size: 1.15vw;
+  margin: 0;
+  padding: 0;
+  width: 2vw;
+  height: 2vw;
+}
+
+.cell:hover {
+  cursor: pointer;
 }
 
 .clicked {
@@ -69,6 +77,46 @@ p {
   margin-left: 31%;
 }
 
+.modal {
+  position: absolute;
+  top: 12vw;
+  left: 39vw;
+  background: #efd5b3;
+  width: 20vw;
+  height: 20vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 10px;
+  border: 2px solid #f5b561;
+  padding: 10px;
+}
+
+.modalButton {
+  background: white;
+  border: 2px solid #f5b561;
+  width: 65%;
+  margin: 0 auto;
+  padding: 10px;
+  border-radius: 23px;
+}
+
+.modalBlock {
+  display: block;
+}
+
+.modalNone {
+  display: none;
+}
+
+.modal-background {
+  background-color: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  width: 100vw;
+  height: 100vw;
+  top: 0;
+}
+
 .bomb.clicked {
   color: rgb(255, 17, 17) !important;
   -webkit-text-stroke: 0.2px black;
@@ -76,3 +124,51 @@ p {
   padding: 0px;
 }
 
+@media (min-width: 769px) and (max-width: 1268px) {
+  table {
+    width: 65vw;
+    height: 65vw;
+  }
+
+  .cell {
+    width: 2vw;
+    height: 3vw;
+    font-size: 25px;
+  }
+
+  .bomb.clicked {
+    font-size: 25px;
+  }
+}
+
+@media (min-width: 490px) and (max-width: 768px) {
+  table {
+    width: 82vw;
+    height: 77vw;
+  }
+
+  .cell {
+    width: 2vw;
+    height: 3vw;
+    font-size: 10px;
+  }
+
+  .modal {
+    top: 25vw;
+    left: 29vw;
+    width: 37vw;
+    height: 38vw;
+  }
+
+  td {
+    border: 1px solid white;
+  }
+
+  .clicked {
+    border: 1px solid rgb(0, 36, 59) !important;
+  }
+
+  .bomb.clicked {
+    font-size: 10px;
+  }
+}
