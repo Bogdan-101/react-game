@@ -24,6 +24,14 @@ export function populateArray(arr, val, count) {
   return arr;
 }
 
+export function populateArrayByMap(arr, val, map) {
+  const mapSize = Math.sqrt(map.length);
+  map.map((elem, ind) => {
+    arr[Math.floor(ind / mapSize)][ind % mapSize] = elem ? val : '';
+  });
+  return arr;
+}
+
 export function adjustCounts(arr, val) {
   for (let i = 0; i < arr.length; i += 1) {
     for (let j = 0; j < arr[0].length; j += 1) {

@@ -47,6 +47,8 @@ class Cell extends Component {
     cellsClass += ` cell${type}`;
     if (clicked)
       cellsClass += ` clicked${type}`;
+    if (this.props.clicked)
+      cellsClass += ` clicked clicked${type}`;
     return (
       <td
         id={`${row}_${column}`}
@@ -54,7 +56,7 @@ class Cell extends Component {
         onClick={this.handleClick.bind(this)}
         onContextMenu={this.handleContextMenu.bind(this)}
       >
-        {clicked && !flag ? value : ''}
+        {clicked && !flag || this.props.clicked && !flag ? value : ''}
         {flag}
         {value==='☀' && visible ? value : ''}
       </td>
@@ -78,6 +80,7 @@ function recursionClick(target, row, column) {
 }
 
 function endGame(target) {
+  localStorage.removeItem('map');
   endMineSweeperGame = true;
   target.style.backgroundColor = 'black';
   let cols = target.parentElement.children.length;

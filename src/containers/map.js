@@ -6,7 +6,8 @@ import Statistics from './statistics.js'
 import {
   createField,
   populateArray,
-  adjustCounts
+  adjustCounts,
+  populateArrayByMap
 } from '../js/mapFunctions/functions.js';
 
 class Map extends Component {
@@ -39,6 +40,20 @@ class Map extends Component {
         '☀'
       ),
     });
+    if (localStorage.getItem('map')) {
+      const map = JSON.parse(localStorage.getItem('map'));
+      if ((difficulty === 1 && Math.sqrt(map.length) === 10) ||
+      (difficulty === 2 && Math.sqrt(map.length) === 20)) {
+        this.setState({
+          theMap: adjustCounts(populateArrayByMap(createField(difficulty * 10, difficulty * 10), '☀',
+          map),
+          '☀'
+        ),
+        })
+      } else {
+        localStorage.removeItem('mapClicked')
+      }
+    }
   }
 
   changeStyle(value) {
@@ -67,17 +82,39 @@ class Map extends Component {
     });
     if (cellsClicked >= safeCells) {
       let leaders = JSON.parse(localStorage.getItem('leaders'));
-      console.log(leaders);
       if (!leaders)
         leaders = [];
       leaders.push({key: leaders.length + 1, name: 'Test', time: (Date.now() - this.state.startTime), difficulty: this.state.difficulty});
       localStorage.setItem('leaders', JSON.stringify(leaders));
       alert('*** You have won! ***');
-    } 
+    }
+
+    if (safeCells % 5 === 0) {
+      let arr = [];
+      let arrClicked = [];
+      for(let i = 0; i < this.state.mapSize; i += 1) {
+        for(let j = 0; j < this.state.mapSize; j += 1) {
+          if (document.getElementById(`${i}_${j}`)) {
+            const elem = document.getElementById(`${i}_${j}`);
+            arr.push(elem.classList.contains('bomb'));
+            arrClicked.push(elem.classList.contains('clicked'));
+          }
+          if (document.getElementById(`${i}_${j}_`)) {
+            const elem = document.getElementById(`${i}_${j}_`);
+            arr.push(elem.classList.contains('bomb'));
+            arrClicked.push(elem.classList.contains('clicked'));
+          }
+        }
+      }
+      localStorage.setItem('map', JSON.stringify(arr));
+      localStorage.setItem('mapClicked', JSON.stringify(arrClicked));
+    }
   }
 
   render() {
-    console.log(this.state.flagged)
+    let arrClicked = [];
+    if (localStorage.getItem('mapClicked'))
+      arrClicked = JSON.parse(localStorage.getItem('mapClicked'));
     return (
       <div className='App'>
         <Options
@@ -97,6 +134,7 @@ class Map extends Component {
                         row={row}
                         column={col}
                         value={subitem}
+                        clicked={arrClicked[row * this.state.mapSize + col]}
                         type={this.state.type}
                         visible={this.state.isBombVisible}
                         flagBomb={this.incFlagged.bind(this)}
