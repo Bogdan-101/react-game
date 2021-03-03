@@ -46,7 +46,6 @@ table {
 }
 
 td {
-  background-color: #DF9A4A;
   border: 2px solid white;
   border-radius: 7px;
   color: white;
@@ -60,13 +59,39 @@ td {
   height: 2vw;
 }
 
+.cell1 {
+  background-color: #DF9A4A;
+}
+
+.cell2 {
+  background-color: #0936c8;
+}
+
+.cell3 {
+  background-color: #8a0ddd;
+}
+
 .cell:hover {
   cursor: pointer;
 }
 
 .clicked {
-  background-color: #9F5709;
   border: 2px solid rgb(0, 36, 59) !important;
+}
+
+.clicked1 {
+  transition: 500ms all;
+  background-color: #9F5709;
+}
+
+.clicked2 {
+  transition: 500ms all;
+  background-color: #062794;
+}
+
+.clicked3 {
+  transition: 500ms all;
+  background-color: #57078d;
 }
 
 p {
@@ -126,6 +151,90 @@ p {
   top: 5.5vw;
 }
 
+.fullscreen {
+  width: 3vw;
+}
+
+.fullscreen-text {
+  position: absolute;
+  top: -0.3vw;
+  transition: 1s all;
+  width: 300px;
+  font-size: 1vw;
+}
+
+.fullscreen-text-show {
+  opacity: 1;
+  right: 2vw;
+}
+
+.fullscreen-text-hide {
+  opacity: 0;
+  right: 10vw;
+}
+
+.playbutton {
+  width: 1.9vw;
+}
+
+.playbutton-text {
+  position: absolute;
+  top: 2.4vw;
+  transition: 1s all;
+  width: 200px;
+}
+
+.playbutton-text-hide {
+  opacity: 0;
+  right: 10vw;
+}
+
+.playbutton-text-show {
+  opacity: 1;
+  right: 4vw;
+}
+
+.menu {
+  width: 2vw;
+  position: relative;
+  top: 0.5vw;
+}
+
+.menu-text {
+  position: absolute;
+  top: 10.5vw;
+  font-size: 1.7vw;
+  transition: 1s all;
+}
+
+.menu-text-show {
+  opacity: 1;
+  right: 10.5vw;
+}
+
+.menu-text-hide {
+  opacity: 0;
+  right: 15vw;
+}
+
+.menuWindow {
+  position: absolute;
+  width: 14vw;
+  height: 48vw;
+  right: 3vw;
+  top: 17vw;
+  border: 4px solid #9F5709;
+  border-radius: 30px;
+}
+
+.menuWindow-open {
+  display: block;
+}
+
+.menuWindow-hidden {
+  display: none;
+}
+
 @media (min-width: 769px) and (max-width: 1268px) {
   table {
     width: 65vw;
@@ -140,6 +249,35 @@ p {
 
   .bomb.clicked {
     font-size: 25px;
+  }
+
+  .fullscreen-text {
+    width: 150px;
+    top: 0.4vw;
+    font-size: 1.5vw;
+  }
+
+  .fullscreen {
+    width: 6vw;
+  }
+
+  .fullscreen-text-show {
+    opacity: 1;
+    right: 5vw;
+  }
+
+  .playbutton {
+    width: 3.9vw;
+  }
+  
+  .playbutton-text {
+    top: 5.8vw;
+    width: 200px;
+    font-size: 1.5vw;
+  }
+
+  .playbutton-text-show {
+    right: 5vw;
   }
 }
 
@@ -172,5 +310,38 @@ p {
 
   .bomb.clicked {
     font-size: 10px;
+  }
+
+  .fullscreen-text {
+    width: 30px;
+    top: 0.1vw;
+    font-size: 1.5vw;
+  }
+
+  .fullscreen {
+    width: 6vw;
+  }
+
+  .fullscreen-text-show {
+    opacity: 1;
+    right: 7vw;
+  }
+
+  .playbutton {
+    width: 3.9vw;
+  }
+  
+  .playbutton-text {
+    top: 5vw;
+    width: 40px;
+    font-size: 1.5vw;
+  }
+  
+  .playbutton-text-hide {
+    right: 10vw;
+  }
+  
+  .playbutton-text-show {
+    right: 5vw;
   }
 }

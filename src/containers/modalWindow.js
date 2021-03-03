@@ -10,7 +10,7 @@ class Modal extends Component {
 
     render() {
         let classname = 'modal-background' + (this.state.difficulty === 0 ? ' modalBlock' : ' modalNone');
-        let { click } = this.props;
+        const { click } = this.props;
         return(
             <div className={classname}>
                 <div className='modal'>

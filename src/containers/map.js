@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Cell from './cell.js';
 import Modal from './modalWindow.js'
+import Options from './options.js'
 import {
   createField,
   populateArray,
@@ -20,7 +21,8 @@ class Map extends Component {
         '☀'
       ),
       difficulty: 0,
-      cellsClicked: 1
+      cellsClicked: 1,
+      type: 1
     };
   }
 
@@ -35,6 +37,10 @@ class Map extends Component {
     });
   }
 
+  changeStyle(value) {
+    this.setState({ type: value })
+  }
+
   handleCellsClicked() {
     let { mapSize, bombCount, cellsClicked } = this.state;
     let safeCells = mapSize * mapSize - bombCount;
@@ -46,7 +52,8 @@ class Map extends Component {
 
   render() {
     return (
-      <div>
+      <div className='App'>
+        <Options typeChange={this.changeStyle.bind(this)}/>
         <Modal click={this.changeDifficulty.bind(this)} />
         <table>
           <tbody>
@@ -60,6 +67,7 @@ class Map extends Component {
                         row={row}
                         column={col}
                         value={subitem}
+                        type={this.state.type}
                         cellsClicked={this.handleCellsClicked.bind(this)}
                       />
                     )

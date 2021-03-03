@@ -30,13 +30,16 @@ class Cell extends Component {
   }
 
   render() {
-    let { row, column, value } = this.props;
+    let { row, column, value, type } = this.props;
     let { clicked, flag } = this.state;
     let cellsClass = classNames({
       cell: true,
       clicked,
-      bomb: value === '☀'
+      bomb: value === '☀',
     });
+    cellsClass += ` cell${type}`;
+    if (clicked)
+      cellsClass += ` clicked${type}`;
     return (
       <td
         id={`${row}_${column}`}
