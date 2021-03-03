@@ -4,6 +4,8 @@ import Modal from './modalWindow.js'
 import Options from './options.js'
 import Statistics from './statistics.js'
 import Pop from '../assets/pop.mp3'
+import Logo from '../assets/rs_school_js.svg'
+import GitLogo from '../assets/github-icon.png'
 import {
   createField,
   populateArray,
@@ -181,6 +183,15 @@ class Map extends Component {
           </tbody>
         </table>
         <Statistics mines={this.state.flagged} totalMines={this.state.bombCount}/>
+        <div className='footer'>
+          <a href='https://rs.school/js/'>
+            <img src={Logo} alt='photo of rsschool' className='logo-photo'></img>
+          </a>
+          <span className='footer-year'>2021</span>
+          <a href='https://github.com/Bogdan-101'>
+            <img src={GitLogo} alt='my github profile' className='git-photo'></img>
+          </a>
+        </div>
       </div>
     )
   }
