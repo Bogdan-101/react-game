@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Cell from './cell.js';
 import Modal from './modalWindow.js'
 import Options from './options.js'
+import Statistics from './statistics.js'
 import {
   createField,
   populateArray,
@@ -22,14 +23,17 @@ class Map extends Component {
       ),
       difficulty: 0,
       cellsClicked: 1,
-      type: 1
+      type: 1,
+      isBombVisible: false,
+      flagged: 0,
+      startTime: Date.now()
     };
   }
 
   changeDifficulty(difficulty) {
     this.setState({ difficulty: difficulty,
       mapSize: difficulty * 10,
-      bombCount: difficulty * 10,
+      bombCount: difficulty ** 2 * 10,
       theMap: adjustCounts(populateArray(createField(difficulty * 10, difficulty * 10), '☀',
         difficulty ** 2 * 10),
         '☀'
@@ -38,7 +42,21 @@ class Map extends Component {
   }
 
   changeStyle(value) {
-    this.setState({ type: value })
+    this.setState({
+      type: value
+    })
+  }
+
+  incFlagged(value) {
+    this.setState({
+      flagged: this.state.flagged + value
+    })
+  }
+
+  toggleBombs() {
+    this.setState({
+      isBombVisible: !this.state.isBombVisible
+    })
   }
 
   handleCellsClicked() {
@@ -47,13 +65,25 @@ class Map extends Component {
     this.setState({
       cellsClicked: cellsClicked + 1
     });
-    if (cellsClicked >= safeCells) alert('*** You have won! ***');
+    if (cellsClicked >= safeCells) {
+      let leaders = JSON.parse(localStorage.getItem('leaders'));
+      console.log(leaders);
+      if (!leaders)
+        leaders = [];
+      leaders.push({key: leaders.length + 1, name: 'Test', time: (Date.now() - this.state.startTime), difficulty: this.state.difficulty});
+      localStorage.setItem('leaders', JSON.stringify(leaders));
+      alert('*** You have won! ***');
+    } 
   }
 
   render() {
+    console.log(this.state.flagged)
     return (
       <div className='App'>
-        <Options typeChange={this.changeStyle.bind(this)}/>
+        <Options
+          typeChange={this.changeStyle.bind(this)}
+          showBombs={this.toggleBombs.bind(this)}
+        />
         <Modal click={this.changeDifficulty.bind(this)} />
         <table>
           <tbody>
@@ -68,6 +98,8 @@ class Map extends Component {
                         column={col}
                         value={subitem}
                         type={this.state.type}
+                        visible={this.state.isBombVisible}
+                        flagBomb={this.incFlagged.bind(this)}
                         cellsClicked={this.handleCellsClicked.bind(this)}
                       />
                     )
@@ -77,6 +109,7 @@ class Map extends Component {
             })}
           </tbody>
         </table>
+        <Statistics mines={this.state.flagged} totalMines={this.state.bombCount}/>
       </div>
     )
   }

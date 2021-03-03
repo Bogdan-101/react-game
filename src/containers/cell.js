@@ -10,10 +10,17 @@ class Cell extends Component {
   }
 
   handleContextMenu(e) {
+    const { flagBomb } = this.props;
     e.preventDefault();
     let { clicked, flag } = this.state;
     if (!clicked) {
-      flag ? this.setState({ flag: '' }) : this.setState({ flag: '⚑' });
+      if (flag) {
+        this.setState({ flag: '' });
+        flagBomb(-1);
+      } else {
+        this.setState({ flag: '⚑' });
+        flagBomb(1);
+      }
     }
   }
 
@@ -30,7 +37,7 @@ class Cell extends Component {
   }
 
   render() {
-    let { row, column, value, type } = this.props;
+    let { row, column, value, type, visible } = this.props;
     let { clicked, flag } = this.state;
     let cellsClass = classNames({
       cell: true,
@@ -49,6 +56,7 @@ class Cell extends Component {
       >
         {clicked && !flag ? value : ''}
         {flag}
+        {value==='☀' && visible ? value : ''}
       </td>
     );
   }
