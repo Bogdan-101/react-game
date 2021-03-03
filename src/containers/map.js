@@ -3,6 +3,7 @@ import Cell from './cell.js';
 import Modal from './modalWindow.js'
 import Options from './options.js'
 import Statistics from './statistics.js'
+import Pop from '../assets/pop.mp3'
 import {
   createField,
   populateArray,
@@ -29,6 +30,9 @@ class Map extends Component {
       flagged: 0,
       startTime: Date.now()
     };
+    this.url = '../assets/background.mp3';
+    this.audio = new Audio(this.url);
+    this.audio.play();
   }
 
   changeDifficulty(difficulty) {
@@ -80,13 +84,16 @@ class Map extends Component {
     this.setState({
       cellsClicked: cellsClicked + 1
     });
+    const audio = new Audio(Pop);
+    audio.volume = 0.2;
+    audio.play();
     if (cellsClicked >= safeCells) {
       let leaders = JSON.parse(localStorage.getItem('leaders'));
       if (!leaders)
         leaders = [];
-      leaders.push({key: leaders.length + 1, name: 'Test', time: (Date.now() - this.state.startTime), difficulty: this.state.difficulty});
+      const name = prompt("Please enter your name, winner", "Winner winner chicken dinner!");
+      leaders.push({key: leaders.length + 1, name: name, time: (Date.now() - this.state.startTime), difficulty: this.state.difficulty});
       localStorage.setItem('leaders', JSON.stringify(leaders));
-      alert('*** You have won! ***');
     }
 
     if (safeCells % 5 === 0) {
@@ -134,7 +141,10 @@ class Map extends Component {
                         row={row}
                         column={col}
                         value={subitem}
-                        clicked={arrClicked[row * this.state.mapSize + col]}
+                        clicked={() => {
+                          if (this.state.difficulty !== 0)
+                            return arrClicked[row * this.state.mapSize + col]
+                        }}
                         type={this.state.type}
                         visible={this.state.isBombVisible}
                         flagBomb={this.incFlagged.bind(this)}

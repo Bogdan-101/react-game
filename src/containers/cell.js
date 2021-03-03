@@ -47,7 +47,7 @@ class Cell extends Component {
     cellsClass += ` cell${type}`;
     if (clicked)
       cellsClass += ` clicked${type}`;
-    if (this.props.clicked)
+    if (this.props.clicked())
       cellsClass += ` clicked clicked${type}`;
     return (
       <td
@@ -56,7 +56,7 @@ class Cell extends Component {
         onClick={this.handleClick.bind(this)}
         onContextMenu={this.handleContextMenu.bind(this)}
       >
-        {clicked && !flag || this.props.clicked && !flag ? value : ''}
+        {clicked && !flag || this.props.clicked() && !flag ? value : ''}
         {flag}
         {value==='☀' && visible ? value : ''}
       </td>

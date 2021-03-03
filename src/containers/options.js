@@ -117,27 +117,27 @@ class Options extends Component {
                         this.state.isLeaderHover ?
                             'leaderboard-text leaderboard-text-show' :
                             'leaderboard-text leaderboard-text-hide'
-                    }>LeaderBoard</p>
+                    }>Leader Board</p>
                 </div>
                 <div className={this.state.isMenuOpen ? 'menuWindow menuWindow-open' : 'menuWindow menuWindow-hidden'}>
                     <h5>MENU</h5>
-                    <button onClick={(() => {
+                    <button className='changeButton' onClick={(() => {
                         typeChange(1)
                         })}>
                         Change colours to type 1
                     </button>
-                    <button onClick={(() => {
+                    <button className='changeButton' onClick={(() => {
                         typeChange(2)
                         })}>
                         Change colours to type 2
                     </button>
-                    <button onClick={(() => {
+                    <button className='changeButton' onClick={(() => {
                         typeChange(3)
                         })}>
                         Change colours to type 3
                     </button>
                     <br></br>
-                    <button onClick={(() => {
+                    <button className='changeButton' onClick={(() => {
                         showBombs()
                         this.setState({
                             isBombsVisible: !this.state.isBombsVisible
@@ -152,6 +152,7 @@ class Options extends Component {
                     'leaderWindow leaderWindow-hidden'
                 }>
                     Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Time&nbsp;&nbsp;&nbsp;Difficulty
+                    <br></br>
                     {typeof(this.leaderList()) === 'string' ? this.leaderList() : 
                         this.leaderList().map((elem) => {
                             return (
