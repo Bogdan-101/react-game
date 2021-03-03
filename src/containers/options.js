@@ -17,7 +17,8 @@ class Options extends Component {
             isMenuOpen: false,
             isBombsVisible: false,
             isLeaderHover: false,
-            isLeaderOpen: false
+            isLeaderOpen: false,
+            volume: 0.2
         }
     }
     
@@ -145,6 +146,25 @@ class Options extends Component {
                         })}>
                         {this.state.isBombsVisible ? 'Hide bombs' : 'Show Bombs'}
                     </button>
+                    <div className='volumeButtons'>
+                        Volume:
+                        <br></br>
+                        <button className='volume' onClick={() => {
+                            this.props.changeVolume(-0.1);
+                            if (this.state.volume > 0.11)
+                                this.setState({ volume: this.state.volume - 0.1 })
+                        }}>
+                            -
+                        </button>
+                        {this.state.volume.toString().slice(0,3)}
+                        <button className='volume' onClick={() => {
+                            this.props.changeVolume(+0.1);
+                            if (this.state.volume < 0.89)
+                                this.setState({ volume: this.state.volume + 0.1 })
+                        }}>
+                            +
+                        </button>
+                    </div>
                 </div>
                 <div className={
                     this.state.isLeaderOpen ?

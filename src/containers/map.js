@@ -28,11 +28,10 @@ class Map extends Component {
       type: 1,
       isBombVisible: false,
       flagged: 0,
-      startTime: Date.now()
+      startTime: Date.now(),
+      volume: 0.1,
+      isPlaying: false
     };
-    this.url = '../assets/background.mp3';
-    this.audio = new Audio(this.url);
-    this.audio.play();
   }
 
   changeDifficulty(difficulty) {
@@ -85,8 +84,17 @@ class Map extends Component {
       cellsClicked: cellsClicked + 1
     });
     const audio = new Audio(Pop);
-    audio.volume = 0.2;
-    audio.play();
+    audio.volume = this.state.volume;
+    if (!this.state.isPlaying)
+      audio.play();
+    this.setState({
+      isPlaying: true
+    })
+    audio.addEventListener('ended', () => {
+      this.setState({
+        isPlaying: false
+      })
+    })
     if (cellsClicked >= safeCells) {
       let leaders = JSON.parse(localStorage.getItem('leaders'));
       if (!leaders)
@@ -118,6 +126,19 @@ class Map extends Component {
     }
   }
 
+  changeVolume(value) {
+    if (this.state.volume <= 0.9 && this.state.volume >= 0.1) {
+      const volume = this.state.volume + value;
+      this.setState({
+        volume: volume
+      })
+    }
+  }
+
+  getVolume() {
+    return this.state.volume;
+  }
+
   render() {
     let arrClicked = [];
     if (localStorage.getItem('mapClicked'))
@@ -127,6 +148,8 @@ class Map extends Component {
         <Options
           typeChange={this.changeStyle.bind(this)}
           showBombs={this.toggleBombs.bind(this)}
+          changeVolume={this.changeVolume.bind(this)}
+          getVolume={this.getVolume.bind(this)}
         />
         <Modal click={this.changeDifficulty.bind(this)} />
         <table>
