@@ -30,7 +30,7 @@ class Map extends Component {
       type: 1,
       isBombVisible: false,
       flagged: 0,
-      startTime: Date.now(),
+      startTime: 0,
       volume: 0.1,
       isPlaying: false
     };
@@ -38,6 +38,7 @@ class Map extends Component {
 
   changeDifficulty(difficulty) {
     this.setState({ difficulty: difficulty,
+      startTime: Date.now(),
       mapSize: difficulty * 10,
       bombCount: difficulty ** 2 * 10,
       theMap: adjustCounts(populateArray(createField(difficulty * 10, difficulty * 10), '☀',
@@ -97,15 +98,7 @@ class Map extends Component {
         isPlaying: false
       })
     })
-    if (cellsClicked >= safeCells) {
-      let leaders = JSON.parse(localStorage.getItem('leaders'));
-      if (!leaders)
-        leaders = [];
-      const name = prompt("Please enter your name, winner", "Winner winner chicken dinner!");
-      leaders.push({key: leaders.length + 1, name: name, time: (Date.now() - this.state.startTime), difficulty: this.state.difficulty});
-      localStorage.setItem('leaders', JSON.stringify(leaders));
-    }
-
+    
     if (safeCells % 5 === 0) {
       let arr = [];
       let arrClicked = [];
@@ -126,6 +119,16 @@ class Map extends Component {
       localStorage.setItem('map', JSON.stringify(arr));
       localStorage.setItem('mapClicked', JSON.stringify(arrClicked));
     }
+    if (cellsClicked >= safeCells) {
+      let leaders = JSON.parse(localStorage.getItem('leaders'));
+      if (!leaders)
+        leaders = [];
+      const name = prompt("Please enter your name, winner", "Winner winner chicken dinner!");
+      localStorage.removeItem('map');
+      localStorage.removeItem('mapClicked');
+      leaders.push({key: leaders.length + 1, name: name, time: (Date.now() - this.state.startTime), difficulty: this.state.difficulty});
+      localStorage.setItem('leaders', JSON.stringify(leaders));
+    }
   }
 
   changeVolume(value) {
@@ -135,6 +138,10 @@ class Map extends Component {
         volume: volume
       })
     }
+  }
+
+  getStartTime() {
+    return this.state.startTime;
   }
 
   getVolume() {
@@ -153,7 +160,7 @@ class Map extends Component {
           changeVolume={this.changeVolume.bind(this)}
           getVolume={this.getVolume.bind(this)}
         />
-        <Modal click={this.changeDifficulty.bind(this)} />
+        <Modal click={this.changeDifficulty.bind(this)} isOpen={this.state.difficulty} />
         <table>
           <tbody>
             {this.state.theMap.map((item, row) => {
@@ -182,7 +189,7 @@ class Map extends Component {
             })}
           </tbody>
         </table>
-        <Statistics mines={this.state.flagged} totalMines={this.state.bombCount}/>
+        <Statistics mines={this.state.flagged} totalMines={this.state.bombCount} startTime={this.state.startTime}/>
         <div className='footer'>
           <a href='https://rs.school/js/'>
             <img src={Logo} alt='photo of rsschool' className='logo-photo'></img>

@@ -4,17 +4,15 @@ class Statistics extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            startTime: Date.now(),
-            timePlaying: 0,
+            startTime: 0,
             totalMines: this.props.totalMines,
             mines: 0,
             isLeader: false
         };
         setInterval(() => {
-            this.setState({
-                timePlaying: Date.now() - this.state.startTime
-            })
-        })
+            this.forceUpdate()
+            console.log('1')
+        }, 1000)
     }
 
     toggleLeaderboard() {
@@ -24,11 +22,17 @@ class Statistics extends React.Component {
     }
 
     render() {
-        const { timePlaying } = this.state;
-        const { mines, totalMines } = this.props;
+        const { mines, totalMines, startTime } = this.props;
+        let timePlaying;
+        let timeMessage = ''
+        if (startTime !== 0)
+            timePlaying = (Date.now() - startTime);
+        else
+            timeMessage = 'Pick difficulty to start!';
         return(
             <div className='statistics'>
-                <div>Time: {Math.floor(timePlaying / 1000 / 60)}m {Math.floor(timePlaying / 1000) % 60}s</div>
+                <div>Time: {Number.isNaN(timePlaying / 1000) ? '0' : Math.floor(timePlaying / 1000 / 60)}m
+                {Number.isNaN(timePlaying) ? '0' : Math.floor(timePlaying / 1000) % 60}s</div>
                 <div>Bomb count: {mines}/{totalMines % 60}</div>
             </div>
         )

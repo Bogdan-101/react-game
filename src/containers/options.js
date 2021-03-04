@@ -20,10 +20,35 @@ class Options extends Component {
             isLeaderOpen: false,
             volume: 0.2
         }
+        document.addEventListener('keydown', ({ code }) => {
+            console.log(code)
+            switch (code) {
+                case 'KeyO':
+                    this.openMenu();
+                    break;
+                case 'Digit1':
+                    this.props.typeChange(1);
+                    break;
+                case 'Digit2':
+                    this.props.typeChange(2);
+                    break;
+                case 'Digit3':
+                    this.props.typeChange(3);
+                    break;
+                case 'KeyL':
+                    this.openLeaderBoard();
+                    break;
+                default:
+                    break;
+            }
+        })
     }
     
     goFullscreen() {
-        this.state.isFullscreen ? document.webkitCancelFullScreen() : document.documentElement.requestFullscreen();
+        console.log(this.state.isFullscreen)
+        this.state.isFullscreen ?
+            document.webkitCancelFullScreen() :
+            document.documentElement.requestFullscreen();
         this.setState({isFullscreen: !this.state.isFullscreen});
     }
     
@@ -178,7 +203,7 @@ class Options extends Component {
                             return (
                             <div className='leader'>
                                 {elem.name}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                {Math.floor(elem.time / 1000 / 60)}m:{Math.floor(elem.time / 1000)}s&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                {Math.floor(elem.time / 1000 / 60)}m:{Math.floor(elem.time / 1000 % 60)}s&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 {elem.difficulty}</div>
                             )
                     })}

@@ -81,6 +81,7 @@ function recursionClick(target, row, column) {
 
 function endGame(target) {
   localStorage.removeItem('map');
+  localStorage.removeItem('mapClicked');
   endMineSweeperGame = true;
   target.style.backgroundColor = 'black';
   let cols = target.parentElement.children.length;
