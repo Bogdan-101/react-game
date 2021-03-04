@@ -199,6 +199,13 @@ class Map extends Component {
             <img src={GitLogo} alt='my github profile' className='git-photo'></img>
           </a>
         </div>
+        <div className='hints'>
+          Hotkeys:<br></br>
+          digit 1 - for turning theme 1<br></br>
+          digit 2 - for turning theme 2<br></br>
+          digit 3 - for turning theme 3<br></br>
+          key l - for opening leaderBoard<br></br>
+          key o - for opening menu</div>
       </div>
     )
   }

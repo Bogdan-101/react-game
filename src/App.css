@@ -322,6 +322,13 @@ p {
   top: 10px;
 }
 
+.hints {
+  position: absolute;
+  bottom: 1vw;
+  right: 1vw;
+  font-size: 1vw;
+}
+
 @media (min-width: 769px) and (max-width: 1268px) {
   table {
     width: 65vw;

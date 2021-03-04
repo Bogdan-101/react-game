@@ -21,7 +21,6 @@ class Options extends Component {
             volume: 0.2
         }
         document.addEventListener('keydown', ({ code }) => {
-            console.log(code)
             switch (code) {
                 case 'KeyO':
                     this.openMenu();
@@ -45,7 +44,6 @@ class Options extends Component {
     }
     
     goFullscreen() {
-        console.log(this.state.isFullscreen)
         this.state.isFullscreen ?
             document.webkitCancelFullScreen() :
             document.documentElement.requestFullscreen();
