@@ -118,6 +118,7 @@ class Map extends Component {
       }
       localStorage.setItem('map', JSON.stringify(arr));
       localStorage.setItem('mapClicked', JSON.stringify(arrClicked));
+      console.log('setting')
     }
     if (cellsClicked >= safeCells) {
       let leaders = JSON.parse(localStorage.getItem('leaders'));

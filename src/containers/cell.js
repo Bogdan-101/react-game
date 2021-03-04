@@ -80,8 +80,6 @@ function recursionClick(target, row, column) {
 }
 
 function endGame(target) {
-  localStorage.removeItem('map');
-  localStorage.removeItem('mapClicked');
   endMineSweeperGame = true;
   target.style.backgroundColor = 'black';
   let cols = target.parentElement.children.length;
@@ -89,9 +87,11 @@ function endGame(target) {
   for (let i = 0; i < rows; i += 1) {
     for (let j = 0; j < cols; j += 1) {
       if (document.getElementById(`${i}_${j}`))
-        document.getElementById(`${i}_${j}`).click();
+      document.getElementById(`${i}_${j}`).click();
     }
   }
+  localStorage.removeItem('map');
+  localStorage.removeItem('mapClicked');
   return;
 }
 
